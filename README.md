@@ -1,6 +1,5 @@
 ## Обучение Егора применению методов машинного обучения
 
-
 1. Удалить строки с нулевым бюджетом (проверить, что нет пропусков NaN, Null)
 2. Нормировать данные (min/max scaling, standard scaling)
 3. Написать функцию для подсчёта функции потерь
@@ -10,17 +9,18 @@
 binary encoding, OHE one hot encoding e.t.c.
 
 ## Automatic Code Formatting
-This repo uses pre-commit hooks to standardize code formatting and save mental energy.<br>
+This repo uses `pre-commit` hooks to standardize code formatting and save mental energy.<br>
 Install pre-commit package with:
-bash
+```bash
 pip install pre-commit
-
+```
 Next, install hooks from .pre-commit-config.yaml:
-bash
+```bash
 pre-commit install
-
+```
 After that your code will be automatically reformatted on every new commit.<br>
 
 To format all files in the project use command:
-bash
+```bash
 pre-commit run -a
+```
