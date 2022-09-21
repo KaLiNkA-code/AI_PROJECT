@@ -1,5 +1,7 @@
-import pandas as pd
+from typing import Dict, Tuple
+
 import numpy as np  # np
+import pandas as pd
 
 
 def clean_df(df: pd.DataFrame):
@@ -9,36 +11,41 @@ def clean_df(df: pd.DataFrame):
     return df
 
 
-def train_val_test_split(
-        df: pd.DataFrame, train_pct: float = 0.6, val_pct: float = 0.2, test_pct: float = 0.2):
+def train_val_test_split(df: pd.DataFrame, train_pct: float = 0.6, val_pct: float = 0.2, test_pct: float = 0.2):
     N = len(df)
+
     if train_pct + val_pct + test_pct != 1.0:
-        train_pct = 0.6
-        val_pct = 0.2
-        test_pct = 0.2
+        train_pct = train_pct / (train_pct + val_pct + test_pct)
+        val_pct = val_pct / (train_pct + val_pct + test_pct)
+        test_pct = test_pct / (train_pct + val_pct + test_pct)
 
     len_train = int(N * train_pct)
     len_val = int(N * val_pct)
+    print(len_train, len_val)
     df.sample()
     train_df, val_df, test_df = df[:len_train], df[len_train:len_val], df[len_val:]
     return train_df, val_df, test_df
 
 
-def preprocess_df(df: pd.DataFrame, columns: tuple = ('budget', 'popularity', 'revenue'), stats=None):
+def preprocess_df(
+    df: pd.DataFrame, columns: tuple = ("budget", "popularity", "revenue"), stats=None
+) -> Tuple[pd.DataFrame, Dict]:
+    #     Tuple[pd.DataFrame, Dict] tuple(pd.DataFrame, dict)
+    # Union[Dict, List] ->  dict | list
     # Select columns
 
     df = df[list(columns)]
     if stats is None:
         stats = {
-            'mean': df.mean(),
-            'std': df.std(),
+            "mean": df.mean(),
+            "std": df.std(),
         }
         # Считаем распределния и нормализуем по данным из DF
         # Standard Scaling
         #          .loc[row_indexer,col_indexer] = value instead
         try:
             for i in columns:
-                df[i] = ((df[i] - stats['mean'][i]) / stats['std'][i])
+                df[i] = (df[i] - stats["mean"][i]) / stats["std"][i]
                 #  df.sample(10)
         except KeyError:
             return "Column not found"
@@ -46,8 +53,8 @@ def preprocess_df(df: pd.DataFrame, columns: tuple = ('budget', 'popularity', 'r
             return f"TraceBack: {Err}"
     else:
         stats = {
-            'mean': df.mean(),
-            'meansquare': df.std(),
+            "mean": df.mean(),
+            "meansquare": df.std(),
         }
     return df, stats
 
