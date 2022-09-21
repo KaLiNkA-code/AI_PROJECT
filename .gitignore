@@ -2,6 +2,7 @@
 data/*
 
 # Byte-compiled / optimized / DLL files
+Конспект/
 __pycache__/
 *.py[cod]
 *$py.class
