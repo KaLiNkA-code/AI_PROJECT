@@ -51,3 +51,5 @@ plt.xlabel("Sixe")
 plt.ylabel("Price")
 plt.legend()
 plt.show()
+
+print( 'hello world' )
