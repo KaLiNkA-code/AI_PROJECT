@@ -53,3 +53,4 @@ plt.legend()
 plt.show()
 
 print( 'hello world' )
+print( 'test to refactoring pre-commit' )
